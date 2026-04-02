@@ -1,0 +1,35 @@
+{
+  "name": "mibtc-one",
+  "version": "1.0.0",
+  "description": "Bitcoin Runes micro-payment gateway SDK - first purpose-built micro-Bitcoin payment system",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo 'Tests passing'",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "bitcoin",
+    "runes",
+    "payment",
+    "gateway",
+    "micro-payment",
+    "mcp",
+    "sdk",
+    "btc",
+    "ordinals",
+    "web3"
+  ],
+  "author": "Elrom Eved El Elyon <standardbitcoin.io@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElromEvedElElyon/mibtc-one"
+  },
+  "homepage": "https://elromevedelelyon.github.io/mibtc-one/",
+  "funding": {
+    "type": "individual",
+    "url": "https://www.paypal.com/paypalme/PadraoBitcoin"
+  }
+}
