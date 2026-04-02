@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>miBTC One — Bitcoin Runes Micro-Payment Gateway</title>
+    <meta name="description" content="The first purpose-built micro-Bitcoin payment system using the Runes protocol. Accept BTC micro-payments with 0.5% fees. SDK, merchant dashboard, and instant settlement.">
+    <meta name="keywords" content="miBTC, bitcoin runes, micro payments, bitcoin payment gateway, runes protocol, BTC payments, crypto payments, merchant, SDK">
+
+    <meta property="og:title" content="miBTC One — Bitcoin Runes Micro-Payment Gateway">
+    <meta property="og:description" content="Accept Bitcoin micro-payments via Runes protocol. 0.5% fees. Instant settlement. SDK + Dashboard.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://elromevedelelyon.github.io/mibtc-one/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@PadraoBitcoin">
+    <meta name="twitter:title" content="miBTC One — Bitcoin Runes Payments">
+    <meta name="twitter:description" content="First purpose-built Bitcoin Runes micro-payment gateway. 0.5% fees. Instant settlement.">
+
+    <style>
+        :root {
+            --btc-orange: #f7931a;
+            --bg-primary: #0a0a14;
+            --bg-card: #12122a;
+            --bg-card-hover: #1a1a3a;
+            --border: #1e1e40;
+            --text: #e8e8f0;
+            --text-dim: #8888aa;
+            --green: #00d68f;
+            --blue: #4a9eff;
+            --gold: #ffd700;
+            --red: #ff4757;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(10,10,20,0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); padding: 16px 0;
+        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--btc-orange); text-decoration: none; }
+        .logo span { color: var(--text); font-weight: 400; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--btc-orange); }
+
+        /* HERO */
+        .hero {
+            padding: 140px 0 80px; text-align: center;
+            background: radial-gradient(ellipse at top, rgba(247,147,26,0.08) 0%, transparent 60%);
+        }
+        .badge {
+            display: inline-block; padding: 6px 16px; border-radius: 20px;
+            background: rgba(247,147,26,0.12); border: 1px solid rgba(247,147,26,0.3);
+            color: var(--btc-orange); font-size: 0.8rem; font-weight: 600; margin-bottom: 24px;
+        }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+        .hero h1 .accent { color: var(--btc-orange); }
+        .hero p { font-size: 1.2rem; color: var(--text-dim); max-width: 640px; margin: 0 auto 36px; }
+        .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600;
+            text-decoration: none; cursor: pointer; border: none; transition: all 0.3s;
+        }
+        .btn-primary { background: var(--btc-orange); color: #000; }
+        .btn-primary:hover { background: #ff9f2e; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(247,147,26,0.3); }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--btc-orange); color: var(--btc-orange); }
+
+        /* STATS */
+        .stats {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+            background: var(--border); border-radius: 12px; overflow: hidden; margin: 60px 0;
+        }
+        .stat {
+            background: var(--bg-card); padding: 32px; text-align: center;
+        }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--btc-orange); }
+        .stat-label { font-size: 0.85rem; color: var(--text-dim); margin-top: 4px; }
+
+        /* FEATURES */
+        .section { padding: 80px 0; }
+        .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 12px; }
+        .section-sub { font-size: 1.05rem; color: var(--text-dim); text-align: center; max-width: 560px; margin: 0 auto 48px; }
+
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .feature {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 32px; transition: all 0.3s;
+        }
+        .feature:hover { border-color: var(--btc-orange); transform: translateY(-4px); }
+        .feature-icon { font-size: 2.2rem; margin-bottom: 16px; }
+        .feature h3 { font-size: 1.15rem; margin-bottom: 8px; }
+        .feature p { font-size: 0.9rem; color: var(--text-dim); }
+
+        /* CODE */
+        .code-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .code-block {
+            background: #0d0d1a; border: 1px solid var(--border); border-radius: 12px;
+            padding: 28px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.85rem;
+            overflow-x: auto; line-height: 1.8;
+        }
+        .code-block .kw { color: #c792ea; }
+        .code-block .fn { color: #82aaff; }
+        .code-block .str { color: #c3e88d; }
+        .code-block .cmt { color: #546e7a; }
+        .code-block .num { color: var(--btc-orange); }
+
+        /* PRICING */
+        .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .price-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 36px; text-align: center; transition: all 0.3s; position: relative;
+        }
+        .price-card.featured {
+            border-color: var(--btc-orange);
+            background: linear-gradient(180deg, rgba(247,147,26,0.06) 0%, var(--bg-card) 100%);
+        }
+        .price-card.featured::before {
+            content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--btc-orange); color: #000; font-size: 0.7rem; font-weight: 700;
+            padding: 4px 16px; border-radius: 12px;
+        }
+        .price-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .price-amount { font-size: 2.8rem; font-weight: 800; color: var(--btc-orange); }
+        .price-period { color: var(--text-dim); font-size: 0.85rem; }
+        .price-features { list-style: none; margin: 24px 0; text-align: left; }
+        .price-features li { padding: 8px 0; font-size: 0.9rem; color: var(--text-dim); border-bottom: 1px solid var(--border); }
+        .price-features li::before { content: '\2713'; color: var(--green); margin-right: 8px; font-weight: 700; }
+
+        /* RUNES ECOSYSTEM */
+        .ecosystem { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .eco-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 28px; display: flex; gap: 16px;
+        }
+        .eco-icon { font-size: 2rem; min-width: 48px; text-align: center; }
+        .eco-card h4 { margin-bottom: 4px; }
+        .eco-card p { font-size: 0.9rem; color: var(--text-dim); }
+
+        /* CTA */
+        .cta {
+            text-align: center; padding: 80px 0;
+            background: linear-gradient(180deg, transparent, rgba(247,147,26,0.04));
+        }
+        .cta h2 { font-size: 2.4rem; font-weight: 800; margin-bottom: 16px; }
+        .cta p { color: var(--text-dim); margin-bottom: 32px; font-size: 1.1rem; }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border); padding: 40px 0; text-align: center;
+            color: var(--text-dim); font-size: 0.85rem;
+        }
+        footer a { color: var(--btc-orange); text-decoration: none; }
+
+        /* WAITLIST */
+        .waitlist-form { display: flex; gap: 12px; justify-content: center; max-width: 480px; margin: 0 auto; }
+        .waitlist-form input {
+            flex: 1; padding: 14px 20px; border-radius: 8px; border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text); font-size: 1rem;
+        }
+        .waitlist-form input::placeholder { color: var(--text-dim); }
+
+        /* BTC PRICE LIVE */
+        .btc-live {
+            position: fixed; bottom: 20px; right: 20px; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px;
+            font-size: 0.8rem; z-index: 50;
+        }
+        .btc-live .price { color: var(--btc-orange); font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .features, .pricing, .ecosystem { grid-template-columns: 1fr; }
+            .code-section { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <a href="#" class="logo">miBTC<span> One</span></a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#sdk">SDK</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#ecosystem">Ecosystem</a>
+            <a href="#waitlist" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.85rem;">Get Started</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <div class="badge">Bitcoin Runes Protocol</div>
+        <h1>Micro-Payments.<br><span class="accent">Powered by Bitcoin.</span></h1>
+        <p>The first purpose-built micro-Bitcoin payment gateway using the Runes protocol. Accept BTC micro-payments with 0.5% fees, instant settlement, and a developer-first SDK.</p>
+        <div class="hero-btns">
+            <a href="#waitlist" class="btn btn-primary">Join Waitlist</a>
+            <a href="#sdk" class="btn btn-outline">View SDK Docs</a>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value">0.5%</div>
+            <div class="stat-label">Transaction Fee</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="btc-price">$66,927</div>
+            <div class="stat-label">BTC Price (Live)</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">12</div>
+            <div class="stat-label">SDK Tools</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">&lt;1s</div>
+            <div class="stat-label">Settlement Time</div>
+        </div>
+    </div>
+</div>
+
+<section class="section" id="features">
+    <div class="container">
+        <h2 class="section-title">Why miBTC One?</h2>
+        <p class="section-sub">Built for the Bitcoin Runes ecosystem. Purpose-built micro-payment infrastructure for merchants, developers, and AI agents.</p>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">&#9889;</div>
+                <h3>Runes-Native Payments</h3>
+                <p>Built directly on the Bitcoin Runes protocol. No bridges, no wrapping, no Layer 2 trust assumptions. Pure Bitcoin settlement.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#128176;</div>
+                <h3>Micro-Payment Optimized</h3>
+                <p>Send payments as small as 1 miBTC (0.001 BTC). Perfect for subscriptions, tips, API usage, and pay-per-use models.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#128187;</div>
+                <h3>Developer SDK</h3>
+                <p>TypeScript/JavaScript SDK with 12 tools. Create invoices, track payments, manage wallets, and handle webhooks in 5 lines of code.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#128202;</div>
+                <h3>Merchant Dashboard</h3>
+                <p>Real-time analytics, payment history, conversion tracking, and settlement reports. Stripe-like UX for Bitcoin payments.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#129302;</div>
+                <h3>AI Agent Compatible</h3>
+                <p>MCP server integration lets AI agents accept and process payments autonomously. Built for the autonomous economy.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">&#128274;</div>
+                <h3>Enterprise Security</h3>
+                <p>Multi-sig support, rate limiting, IP whitelisting, and webhook signatures. SOC 2 compliance roadmap.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="sdk" style="background: rgba(247,147,26,0.02);">
+    <div class="container">
+        <h2 class="section-title">Integration in 5 Lines</h2>
+        <p class="section-sub">Accept Bitcoin Runes payments with our developer-first SDK. Works with any JavaScript framework.</p>
+        <div class="code-section">
+            <div>
+                <h3 style="margin-bottom: 16px;">Quick Start</h3>
+                <p style="color: var(--text-dim); margin-bottom: 24px;">Install via npm and create your first payment invoice in seconds. Full TypeScript support with comprehensive type definitions.</p>
+                <ul style="list-style: none; margin-top: 16px;">
+                    <li style="padding: 8px 0; color: var(--text-dim);"><span style="color: var(--green);">&#10003;</span> Wallet detection (Xverse, Unisat, Phantom)</li>
+                    <li style="padding: 8px 0; color: var(--text-dim);"><span style="color: var(--green);">&#10003;</span> QR code generation</li>
+                    <li style="padding: 8px 0; color: var(--text-dim);"><span style="color: var(--green);">&#10003;</span> Transaction confirmation tracking</li>
+                    <li style="padding: 8px 0; color: var(--text-dim);"><span style="color: var(--green);">&#10003;</span> Webhook callbacks</li>
+                    <li style="padding: 8px 0; color: var(--text-dim);"><span style="color: var(--green);">&#10003;</span> MCP server integration</li>
+                </ul>
+            </div>
+            <div class="code-block">
+<span class="cmt">// npm install mibtc-one</span>
+<span class="kw">import</span> { <span class="fn">MiBTCPay</span> } <span class="kw">from</span> <span class="str">'mibtc-one'</span>;
+
+<span class="kw">const</span> pay = <span class="kw">new</span> <span class="fn">MiBTCPay</span>({
+  <span class="fn">merchantId</span>: <span class="str">'your-id'</span>,
+  <span class="fn">network</span>: <span class="str">'mainnet'</span>
+});
+
+<span class="cmt">// Create a payment invoice</span>
+<span class="kw">const</span> invoice = <span class="kw">await</span> pay.<span class="fn">createInvoice</span>({
+  <span class="fn">amount</span>: <span class="num">100</span>, <span class="cmt">// 100 miBTC</span>
+  <span class="fn">currency</span>: <span class="str">'MIBTC'</span>,
+  <span class="fn">description</span>: <span class="str">'Premium access'</span>,
+  <span class="fn">callbackUrl</span>: <span class="str">'https://your.api/webhook'</span>
+});
+
+<span class="cmt">// Returns: { id, qrCode, address, amount }</span>
+console.<span class="fn">log</span>(invoice.<span class="fn">qrCode</span>);
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="ecosystem">
+    <div class="container">
+        <h2 class="section-title">Runes Ecosystem Integration</h2>
+        <p class="section-sub">Built on battle-tested Bitcoin infrastructure. Compatible with the entire Runes ecosystem.</p>
+        <div class="ecosystem">
+            <div class="eco-card">
+                <div class="eco-icon">&#9898;</div>
+                <div>
+                    <h4>Hiro Runes API</h4>
+                    <p>Real-time Rune balance queries, transaction tracking, and UTXO management via Hiro's production API.</p>
+                </div>
+            </div>
+            <div class="eco-card">
+                <div class="eco-icon">&#9889;</div>
+                <div>
+                    <h4>Lightning Bridge</h4>
+                    <p>Optional Lightning Network integration for sub-second micro-payments with Runes settlement.</p>
+                </div>
+            </div>
+            <div class="eco-card">
+                <div class="eco-icon">&#128737;</div>
+                <div>
+                    <h4>Wallet Support</h4>
+                    <p>Native support for Xverse, Unisat, Phantom Bitcoin, and OKX Wallet. Hardware wallet compatible.</p>
+                </div>
+            </div>
+            <div class="eco-card">
+                <div class="eco-icon">&#128200;</div>
+                <div>
+                    <h4>OrdinalsBot Integration</h4>
+                    <p>Seamless etching, minting, and trading via OrdinalsBot API. Production-ready infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="pricing" style="background: rgba(247,147,26,0.02);">
+    <div class="container">
+        <h2 class="section-title">Simple, Transparent Pricing</h2>
+        <p class="section-sub">No hidden fees. No minimum commitments. Scale as you grow.</p>
+        <div class="pricing">
+            <div class="price-card">
+                <h3>Starter</h3>
+                <div class="price-amount">Free</div>
+                <div class="price-period">forever</div>
+                <ul class="price-features">
+                    <li>10 transactions/month</li>
+                    <li>Basic dashboard</li>
+                    <li>Community support</li>
+                    <li>1% transaction fee</li>
+                </ul>
+                <a href="#waitlist" class="btn btn-outline" style="width: 100%; display: block;">Get Started</a>
+            </div>
+            <div class="price-card featured">
+                <h3>Pro</h3>
+                <div class="price-amount">$29<span style="font-size: 1rem;">.99</span></div>
+                <div class="price-period">/month</div>
+                <ul class="price-features">
+                    <li>500 transactions/month</li>
+                    <li>Full analytics dashboard</li>
+                    <li>Webhook notifications</li>
+                    <li>0.5% transaction fee</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="https://buy.stripe.com/test_aEU3f6b1K9Oo5zy8ww" class="btn btn-primary" style="width: 100%; display: block;">Subscribe</a>
+            </div>
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <div class="price-amount">$99<span style="font-size: 1rem;">.99</span></div>
+                <div class="price-period">/month</div>
+                <ul class="price-features">
+                    <li>Unlimited transactions</li>
+                    <li>White-label SDK</li>
+                    <li>Dedicated support</li>
+                    <li>0.3% transaction fee</li>
+                    <li>Custom integrations</li>
+                    <li>SLA guarantee</li>
+                </ul>
+                <a href="mailto:standardbitcoin.io@gmail.com?subject=miBTC%20One%20Enterprise" class="btn btn-outline" style="width: 100%; display: block;">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta" id="waitlist">
+    <div class="container">
+        <h2>Be First. <span style="color: var(--btc-orange);">Build on Bitcoin.</span></h2>
+        <p>Join the waitlist for early access to miBTC One. First 100 developers get Pro tier free for 6 months.</p>
+        <div class="waitlist-form">
+            <input type="email" id="waitlist-email" placeholder="your@email.com">
+            <button class="btn btn-primary" onclick="joinWaitlist()">Join Waitlist</button>
+        </div>
+        <p style="margin-top: 16px; font-size: 0.8rem; color: var(--text-dim);">
+            Or pay with crypto:
+            <span style="color: var(--btc-orange);">BTC</span> bc1qdj3flkqe7v3qwlfux5d5u3rja7ldm9gwywk9t2 |
+            <span style="color: #9945ff;">SOL</span> CM42ofAFowySg72GjDuCchEkwwbwnhdSRYgztRCAAEzR
+        </p>
+        <div style="margin-top: 24px;">
+            <a href="https://www.paypal.com/paypalme/PadraoBitcoin" class="btn btn-outline" style="margin: 4px;">PayPal</a>
+            <a href="https://github.com/ElromEvedElElyon/mibtc-one" class="btn btn-outline" style="margin: 4px;">GitHub</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>miBTC One &mdash; by <a href="https://github.com/ElromEvedElElyon">Padrao Bitcoin</a></p>
+        <p style="margin-top: 8px;">CNPJ 51.148.891/0001-69 | Sao Paulo, Brazil</p>
+        <p style="margin-top: 8px;">
+            <a href="https://elromevedelelyon.github.io/flash-payment-system/">Flash Payment System</a> &middot;
+            <a href="https://elromevedelelyon.github.io/buy-zion-browser/">Zion Browser</a> &middot;
+            <a href="https://elromevedelelyon.github.io/gitflix-app/">GitFlix</a>
+        </p>
+    </div>
+</footer>
+
+<div class="btc-live">
+    BTC <span class="price" id="btc-footer">$66,927</span>
+</div>
+
+<script>
+function joinWaitlist() {
+    const email = document.getElementById('waitlist-email').value;
+    if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    const subject = encodeURIComponent('miBTC One Waitlist');
+    const body = encodeURIComponent(`I want early access to miBTC One.\n\nEmail: ${email}`);
+    window.location.href = `mailto:standardbitcoin.io@gmail.com?subject=${subject}&body=${body}`;
+    alert('Thank you! Redirecting to send your waitlist request.');
+}
+
+// Live BTC price
+async function updateBTCPrice() {
+    try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await res.json();
+        const price = data.bitcoin.usd.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+        document.getElementById('btc-price').textContent = price;
+        document.getElementById('btc-footer').textContent = price;
+    } catch(e) {}
+}
+updateBTCPrice();
+setInterval(updateBTCPrice, 60000);
+</script>
+
+</body>
+</html>
