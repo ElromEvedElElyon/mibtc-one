@@ -4,6 +4,7 @@
   "description": "Bitcoin Runes micro-payment gateway SDK - first purpose-built micro-Bitcoin payment system",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "llms.txt"],
   "scripts": {
     "build": "tsc",
     "test": "echo 'Tests passing'",

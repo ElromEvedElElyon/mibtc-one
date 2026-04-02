@@ -1,0 +1,56 @@
+# miBTC One
+
+> Bitcoin Runes Micro-Payment Gateway SDK
+
+miBTC One is the first purpose-built micro-Bitcoin payment system using the Runes protocol on Bitcoin. It enables developers to accept BTC micro-payments with 0.5% fees, instant settlement, and a TypeScript SDK.
+
+## Features
+
+- Runes-native payments on Bitcoin (no bridges)
+- Micro-payment optimized (as small as 1 miBTC / 0.001 BTC)
+- TypeScript SDK with 12 tools
+- MCP server for AI agent payment processing
+- Multi-wallet support: Xverse, Unisat, Phantom, OKX
+- Merchant dashboard with real-time analytics
+
+## Quick Start
+
+```bash
+npm install mibtc-one
+```
+
+```typescript
+import { MiBTCPay } from 'mibtc-one';
+
+const pay = new MiBTCPay({
+  merchantId: 'your-id',
+  network: 'mainnet'
+});
+
+const invoice = await pay.createInvoice({
+  amount: 100,
+  currency: 'MIBTC',
+  description: 'Premium access',
+  callbackUrl: 'https://your.api/webhook'
+});
+```
+
+## Pricing
+
+- Starter: Free (10 tx/month, 1% fee)
+- Pro: $29.99/mo (500 tx/month, 0.5% fee)
+- Enterprise: $99.99/mo (Unlimited, 0.3% fee)
+
+## Links
+
+- Website: https://elromevedelelyon.github.io/mibtc-one/
+- GitHub: https://github.com/ElromEvedElElyon/mibtc-one
+- Company: Padrao Bitcoin (CNPJ 51.148.891/0001-69)
+- Email: standardbitcoin.io@gmail.com
+
+## Payment
+
+- PayPal: https://www.paypal.com/paypalme/PadraoBitcoin
+- BTC: bc1qdj3flkqe7v3qwlfux5d5u3rja7ldm9gwywk9t2
+- SOL: CM42ofAFowySg72GjDuCchEkwwbwnhdSRYgztRCAAEzR
+- ETH: 0x6b45b26e1d59A832FE8c9E7c685C36Ea54A3F88B
