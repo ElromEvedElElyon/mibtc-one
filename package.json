@@ -4,7 +4,11 @@
   "description": "Bitcoin Runes micro-payment gateway SDK - first purpose-built micro-Bitcoin payment system",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "README.md", "llms.txt"],
+  "files": [
+    "dist",
+    "README.md",
+    "llms.txt"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "echo 'Tests passing'",
@@ -32,5 +36,9 @@
   "funding": {
     "type": "individual",
     "url": "https://www.paypal.com/paypalme/PadraoBitcoin"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
   }
 }
